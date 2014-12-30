@@ -108,7 +108,7 @@ context.translate(0, 10)
 context.show_pango_layout(layout)
 context.show_page
 
-surface.write_to_png("hinomaru.png")
+surface.write_to_png("label.png")
 data = []
 
 surface.data.unpack("C*").each_slice(4) {|x|
