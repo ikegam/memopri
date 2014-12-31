@@ -21,16 +21,22 @@ opt.on('-d VAL'){|v|
   device = devices[v.to_i]
 }
 
-opt.on('-n VAL'){|v|
-  noline = v.to_i
+opt.on('-l'){|v|
+  p devices
+  exit 0
 }
+
 opt.parse!(ARGV)
 
 if device == nil
   device = devices[0]
 end
 
-line = STDIN.readline
-str_data = Memopri::Renderer.new(line, noline)
+line = STDIN.readlines.join().chomp
+if line == ""
+  exit -1
+end
+
+str_data = Memopri::Renderer.new(line)
 memopri = Memopri::Printer.new(device[1][-1])
 memopri.print(str_data.conv)
