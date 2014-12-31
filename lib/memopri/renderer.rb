@@ -28,21 +28,22 @@ class Renderer
       font_description.size *= 1.06
       layout.font_description = font_description
       size = layout.size.map{|x| x/Pango::SCALE}
-    end while size[1] <= (110/(1.1*@nol))
+    end while size[1] <= ((125/@nol.to_f) - 2)
 
-    width = (size[0] + 10)/(0.8*@nol)
+    width = (size[0])/(@nol.to_f)
 
     surface = Cairo::ImageSurface.new(format, width, 128)
     context = Cairo::Context.new(surface)
     layout = context.create_pango_layout
     layout.text = str
     layout.width = width * Pango::SCALE
+    layout.wrap = Pango::WRAP_CHAR
     layout.font_description = font_description
-    context.translate(0, 10)
+    context.translate(5, 5)
     context.show_pango_layout(layout)
     context.show_page
 
-    surface.write_to_png("hinomaru.png")
+    surface.write_to_png("/tmp/hinomaru.png")
 
     data = []
 

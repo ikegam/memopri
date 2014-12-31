@@ -8,8 +8,8 @@ Gem::Specification.new do |spec|
   spec.version       = Memopri::VERSION
   spec.authors       = ["Hiroyuki Ikegami"]
   spec.email         = ["ikegam@mixallow.net"]
-  spec.summary       = %q{TODO: Write a short summary. Required.}
-  spec.description   = %q{TODO: Write a longer description. Optional.}
+  spec.summary       = %q{Client software for CASIO Memopri MEP-F10}
+  spec.description   = %q{Client software for CASIO Memopri MEP-F10}
   spec.homepage      = ""
   spec.license       = "MIT"
 
@@ -18,6 +18,10 @@ Gem::Specification.new do |spec|
   spec.test_files    = spec.files.grep(%r{^(test|spec|features)/})
   spec.require_paths = ["lib"]
 
+  spec.executables << 'memopri'
+
   spec.add_development_dependency "bundler", "~> 1.6"
   spec.add_development_dependency "rake", "~> 10.0"
+  spec.add_dependency "cairo"
+  spec.add_dependency "pango"
 end
