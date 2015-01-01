@@ -9,7 +9,7 @@ Gem::Specification.new do |spec|
   spec.authors       = ["Hiroyuki Ikegami"]
   spec.email         = ["ikegam@mixallow.net"]
   spec.summary       = %q{Client software for CASIO Memopri MEP-F10}
-  spec.description   = %q{Client software for CASIO Memopri MEP-F10}
+  spec.description   = %q{This is a command line based application to use Casio's Memopri (MEP-F10). MEP-F10 is a sticker printer and it is very cheap around 5000 yen ($50). There are no nice same kinds of device which runs on Linux environemnt. You can print stickers using this software.}
   spec.homepage      = "https://github.com/ikegam/memopri"
   spec.license       = "MIT"
 
