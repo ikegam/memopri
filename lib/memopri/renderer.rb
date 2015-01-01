@@ -35,14 +35,13 @@ class Memopri
       context = Cairo::Context.new(surface)
       layout = context.create_pango_layout
       layout.text = str
-      #layout.width = width * Pango::SCALE * 0.9
       layout.wrap = Pango::WRAP_CHAR
       layout.font_description = font_description
       context.translate(0, 7)
       context.show_pango_layout(layout)
       context.show_page
 
-      surface.write_to_png("/tmp/hinomaru.png")
+      surface.write_to_png("/tmp/memopri-debug.png")
 
       data = []
 
