@@ -12,6 +12,7 @@ device = nil
 noline = 1
 
 if devices == nil
+  puts "No such device. Please ensure WiFi connectivity."
   exit -1
 end
 
