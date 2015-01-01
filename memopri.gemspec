@@ -10,7 +10,7 @@ Gem::Specification.new do |spec|
   spec.email         = ["ikegam@mixallow.net"]
   spec.summary       = %q{Client software for CASIO Memopri MEP-F10}
   spec.description   = %q{Client software for CASIO Memopri MEP-F10}
-  spec.homepage      = ""
+  spec.homepage      = "https://github.com/ikegam/memopri"
   spec.license       = "MIT"
 
   spec.files         = `git ls-files -z`.split("\x0")
