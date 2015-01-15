@@ -7,30 +7,46 @@ require 'memopri/version.rb'
 
 require 'optparse'
 
-devices = Memopri::Finder.find
 device = nil
 noline = 1
 
-if devices == nil
-  puts "No such device. Please ensure WiFi connectivity."
-  exit -1
-end
+target = nil
 
 opt = OptionParser.new
 
+opt.on('-p VAL'){|v|
+  target = v
+}
+
 opt.on('-d VAL'){|v|
-  device = devices[v.to_i]
+  devices = Memopri::Finder.find
+
+  if devices == nil
+    puts "No such device. Please ensure WiFi connectivity."
+    exit -1
+  end
+
+  target = devices[v.to_i][1][-1]
 }
 
 opt.on('-l'){|v|
+  devices = Memopri::Finder.find
+
   p devices
   exit 0
 }
 
 opt.parse!(ARGV)
 
-if device == nil
-  device = devices[0]
+if target == nil
+  devices = Memopri::Finder.find
+
+  if devices == nil
+    puts "No such device. Please ensure WiFi connectivity."
+    exit -1
+  end
+
+  target = devices[0][1][-1]
 end
 
 line = STDIN.readlines.join().chomp
@@ -39,5 +55,5 @@ if line == ""
 end
 
 str_data = Memopri::Renderer.new(line)
-memopri = Memopri::Printer.new(device[1][-1])
+memopri = Memopri::Printer.new(target)
 memopri.print(str_data.conv)
