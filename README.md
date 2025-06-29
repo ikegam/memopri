@@ -1,24 +1,35 @@
-# CLI Utility for Memopri MEP-F10
+# Memopri Command Line Utility
 
-This is a command line based application to use Casio's Memopri (MEP-F10). MEP-F10 is a sticker printer and it is very cheap around 5000 yen ($50). There are no nice same kinds of device which runs on Linux environemnt. You can print stickers using this software.
+This gem provides a simple way to print text on a CASIO Memopri MEP-F10 label printer from Linux. The printer communicates over Wi‑Fi and this tool implements the minimal protocol required to send text labels.
 
-* [Amazon Link w/ my affiliaton](http://www.amazon.co.jp/gp/product/B00B973384/ref=as_li_ss_tl?ie=UTF8&camp=247&creative=7399&creativeASIN=B00B973384&linkCode=as2&tag=mixallowblogd-22)
+## Installation
 
+```
+$ gem install memopri
+```
 
-# Installation
+The printer must be reachable via the network. The tool depends on [cairo](https://www.cairographics.org/) and [pango](https://pango.gnome.org/) to render text.
 
-* gem install memopri
+## Usage
 
-# Usage
+Print standard input to the first printer found on the network:
 
-* echo -e "hoge\nhoge" | memopri
+```
+$ echo "Hello, world" | memopri
+```
 
-# ToDo
+Specify a printer by IP address:
 
-* Image
-* Fix magic numbers
-* Analyze communication protocols more
+```
+$ echo "Label" | memopri -p 192.168.0.74
+```
 
-# Test environment
+List discovered devices:
 
-Debian GNU/Linux w/ ruby 2.1.5p273 (2014-11-13) [x86-64-linux-gnu]
+```
+$ memopri -l
+```
+
+## Development
+
+This project was tested on Debian GNU/Linux with Ruby 2.1.5. Contributions are welcome.

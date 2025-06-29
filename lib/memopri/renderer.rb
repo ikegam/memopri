@@ -3,7 +3,7 @@
 require 'cairo'
 require 'pango'
 
-class Memopri
+module Memopri
   class Renderer
 
     attr_accessor :str, :nol
