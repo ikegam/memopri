@@ -2,78 +2,64 @@
 
 require 'socket'      # Sockets are in standard library
 
-class Memopri
+module Memopri
   class Printer
 
-    def initialize(host, port=16402)
+    DEFAULT_PORT = 16402
+
+    def initialize(host, port = DEFAULT_PORT)
       @hostname = host
-      @port = port
-      @socket = TCPSocket.open(@hostname, @port)
+      @port     = port
+      @socket   = TCPSocket.open(@hostname, @port)
     end
 
-    def _send(cmd)
-      cmd = cmd.pack('C*')
-      @socket.write(cmd)
-      @socket.flush()
-    end
-
-    def _recv(len)
-      return @socket.read(len)
+    def close
+      @socket.close
     end
 
     def print(data)
-      cmd = [0x1b, 0x5a]
-      _send(cmd)
-      _recv(1)
-
-      cmd = [0x05]
-      _send(cmd)
-      _recv(6)
-
-      cmd = [0x06]
-      _send(cmd)
-      _recv(1)
-
-      cmd = [0x1b, 0x49]
-      _send(cmd)
-      _recv(1)
-
-      cmd = [0x05]
-      _send(cmd)
-      _recv(8)
-
-      cmd = [0x06]
-      _send(cmd)
-      _recv(1)
-
-      cmd = [0x1b, 0x50]
-      _send(cmd)
-      _recv(1)
+      send_command([0x1b, 0x5a])
+      send_command([0x05], 6)
+      send_command([0x06])
+      send_command([0x1b, 0x49])
+      send_command([0x05], 8)
+      send_command([0x06])
+      send_command([0x1b, 0x50])
 
       length = data.size
 
       cmd = [
         0x02, 0x80, 0x0c, 0x00, 0x00, 0x00, 0x00, 0x02,
         0x80, 0x00,
-        (length/16) & 0x00FF, ((length/16) >> 8) & 0x00FF,
-        (length)    & 0x00FF, ((length)    >> 8) & 0x00FF,
+        (length / 16) & 0x00FF, ((length / 16) >> 8) & 0x00FF,
+        (length)       & 0x00FF, ((length)       >> 8) & 0x00FF,
         0x00, 0x00,
       ]
-      _send(cmd)
-      _recv(1)
+      send_command(cmd)
 
-      cmd = [0x1b, 0x56]
-      _send(cmd)
-      _recv(1)
+      send_command([0x1b, 0x56])
 
-      data.each_slice(64){|x|
-        _send(x)
-        _recv(1)
-      }
+      data.each_slice(64) do |x|
+        send_command(x)
+      end
 
-      cmd = [0x1b, 0x42]
-      _send(cmd)
-      _recv(1)
+      send_command([0x1b, 0x42])
+    end
+
+    private
+
+    def send_command(cmd, resp_len = 1)
+      raw_send(cmd)
+      raw_recv(resp_len)
+    end
+
+    def raw_send(cmd)
+      @socket.write(cmd.pack('C*'))
+      @socket.flush
+    end
+
+    def raw_recv(len)
+      @socket.read(len)
     end
   end
 end

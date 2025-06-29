@@ -1,6 +1,6 @@
 require 'socket'
 
-class Memopri
+module Memopri
   class Finder
     def self.find
       sendsocket = UDPSocket.new()
